@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Details";
+}
+
+@model PingPong.Models.Player
+
+@*This screen allows a user to supply an email to the details page and either view/edit an existing players information or add a new player*@
+<h2>Add or Update Player Information</h2>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Details" asp-action="EditLookup">
+            <div class="form-group">
+                <label class="control-label">Player Email: </label><input type="text" name="SearchString" class="form-control" />
+            </div>
+            <input formaction=@Url.Action("EditLookup") name="button" type="submit" value="Edit" class="btn btn-primary" />
+            <input formaction=@Url.Action("AddNew") name="button" type="submit" value="Add New" class="btn btn-primary" />
+
+        </form>
+    </div>
+</div>
+
+
+
+<div>
+    <a asp-controller="Home" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

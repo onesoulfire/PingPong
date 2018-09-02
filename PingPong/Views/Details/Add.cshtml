@@ -1,0 +1,59 @@
+﻿@model PingPong.Models.Player
+
+@{
+    ViewData["Title"] = "Add Player";
+
+    var email = ViewData["Email"];
+}
+
+<h2>Fill In Applicant Information</h2>
+
+<h4>Player Information:</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label"></label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            @*Building dropdown list for Skill level. Ideally this will eventually use a table/model in the
+                datasbase which can be used for reference/populating the database. For now this approach allows a centralized location for the allowed field values*@
+            <div class="form-group">
+                <label asp-for="SkillLevel" class="control-label"></label>
+                @Html.DropDownListFor(m => m.SkillLevel,
+                    new SelectList(Enum.GetValues(typeof(Skill))),
+                    htmlAttributes: new { @class = "form-control" })
+                <span asp-validation-for="SkillLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control"  value="@email"/>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "Home", null, null)
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
